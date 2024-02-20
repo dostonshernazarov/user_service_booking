@@ -1,0 +1,13 @@
+CREATE TABLE user_info (id UUID PRIMARY KEY,
+                        first_name VARCHAR(255),
+                        last_name VARCHAR(255),
+                        email VARCHAR(255),
+                        password VARCHAR(255),
+                        birthday VARCHAR(255),
+                        image_url VARCHAR(255),
+                        card_num VARCHAR(255),
+                        phone VARCHAR(255),
+                        role VARCHAR(255),
+                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                        deleted_at TIMESTAMP);
