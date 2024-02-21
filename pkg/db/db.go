@@ -1,10 +1,10 @@
 package db
 
 import (
-	"Booking/user_service/config"
 	"fmt"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq" //postgres drivers
+	"user_service_booking/config"
 )
 
 func ConnectToDB(cfg config.Config) (*sqlx.DB, error) {
