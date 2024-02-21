@@ -22,6 +22,17 @@ func NewUserService(db *sqlx.DB, log l.Logger) *UserService {
 	}
 }
 
+func (s *UserService) UpdateUser(ctx context.Context, req *pb.User) (*pb.User, error) {
+
+	res, err := s.storage.User().UpdateUserByID(req)
+	if err != nil {
+		s.logger.Error(err.Error())
+		return nil, err
+	}
+	return res, nil
+
+}
+
 func (s *UserService) GetUserByRfshToken(ctx context.Context, req *pb.GetUserByRfshTokenRequest) (*pb.User, error) {
 	res, err := s.storage.User().GetUserByRefreshTkn(req.Token)
 	if err != nil {

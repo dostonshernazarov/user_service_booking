@@ -12,4 +12,5 @@ type UserStorageI interface {
 	CheckUniqueEmail(req *pb.CheckUniqueRequest) (*pb.CheckUniqueRespons, error)
 	CheckUniqueNum(req *pb.CheckUniqueRequest) (*pb.CheckUniqueRespons, error)
 	GetUserByRefreshTkn(string) (*pb.User, error)
+	UpdateUserByID(*pb.User) (*pb.User, error)
 }
