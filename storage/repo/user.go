@@ -6,11 +6,14 @@ import (
 
 // UserStorageI ...
 type UserStorageI interface {
-	GetUserbyEmail(string) (*pb.User, error)
-	PartCreate(*pb.PartUser) (*pb.PartUser, error)
-	Create(*pb.User) (*pb.User, error)
-	CheckUniqueEmail(req *pb.CheckUniqueRequest) (*pb.CheckUniqueRespons, error)
-	CheckUniqueNum(req *pb.CheckUniqueRequest) (*pb.CheckUniqueRespons, error)
-	GetUserByRefreshTkn(string) (*pb.User, error)
 	UpdateUserByID(*pb.User) (*pb.User, error)
+	GetUserbyEmail(string) (*pb.User, error)
+	GetUserByRefreshTkn(string) (*pb.User, error)
+	Create(*pb.User) (*pb.User, error)
+	CheckUniqueEmail(*pb.CheckUniqueRequest) (*pb.CheckUniqueRespons, error)
+	CheckUniqueNum(*pb.CheckUniqueRequest) (*pb.CheckUniqueRespons, error)
+	GetUserByID(string) (*pb.User, error)
+	GetAllUsers(*pb.GetAllUsersRequest) ([]*pb.User, error)
+	SoftDeleteUserByID(string) error
+	GetWithColumnAndItem(*pb.GetWithColumnAndItemReq) ([]*pb.User, error)
 }
