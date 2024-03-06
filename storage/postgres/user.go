@@ -425,14 +425,14 @@ func (r *userRepo) SoftDeleteUserByID(id string) error {
 func (r *userRepo) GetWithColumnAndItem(req *pb.GetWithColumnAndItemReq) ([]*pb.User, error) {
 	var users []*pb.User
 
-	query := fmt.Sprintf("SELECT id, first_name, last_name, email, password, birthday, image_url,card_num, phone, role, refresh_token FROM user_info WHERE %s LIKE '%$1%' AND deleted_at IS NULL LIMIT $2 OFFSET $3", req.Column)
+	iteamQ := "%" + req.Item + "%"
 
-	fmt.Println("\n", query, "\n")
+	query := fmt.Sprintf("SELECT id, first_name, last_name, email, password, birthday, image_url,card_num, phone, role, refresh_token FROM user_info WHERE %s LIKE '%s' AND deleted_at IS NULL LIMIT $1 OFFSET $2", req.Column, iteamQ)
+
 	offset := req.Limit * (req.Page - 1)
-	rows, err := r.db.Query(query, req.Item, req.Limit, offset)
+	rows, err := r.db.Query(query, req.Limit, offset)
 	if err != nil {
 		logger.Error(err)
-		fmt.Println("\n\n error\n\n")
 		return nil, err
 	}
 	defer rows.Close()
