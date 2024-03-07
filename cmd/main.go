@@ -8,7 +8,7 @@ import (
 	pb "user_service_booking/genproto/user_proto"
 	"user_service_booking/pkg/db"
 	"user_service_booking/pkg/logger"
-	"user_service_booking/queue/kafka/consumer"
+	"user_service_booking/queue/rabbitmq/consumermq"
 	"user_service_booking/service"
 )
 
@@ -30,16 +30,29 @@ func main() {
 
 	userService := service.NewUserService(connDB, log)
 
-	consumer, err := consumer.NewKafkaConsumerInit([]string{"localhost:9092"}, "test-topic", "1")
-	if err != nil {
-		log.Fatal("NewKafkaConsumerInit: %v", logger.Error(err))
-	}
+	//consumer, err := consumer.NewKafkaConsumerInit([]string{"localhost:9092"}, "test-topic", "1")
+	//if err != nil {
+	//	log.Fatal("NewKafkaConsumerInit: %v", logger.Error(err))
+	//}
+	//
+	//defer consumer.Close()
+	//
+	//go func() {
+	//	consumer.ConsumeMessages(consumerHandler)
+	//}()
 
+	// rabbit mq -------------
+	consumer, err := consumermq.NewRabbitMQConsumer("amqp://guest:guest@localhost:5672/", "test-topic")
+	if err != nil {
+		log.Error("NewRabbitMqConsumer", logger.Error(err))
+		return
+	}
 	defer consumer.Close()
 
 	go func() {
-		consumer.ConsumeMessages(consumerHandler)
+		consumer.ConsumerMassages(consumerHandler)
 	}()
+	// rabbit mq end ------------
 
 	lis, err := net.Listen("tcp", cfg.RPCPort)
 	if err != nil {
@@ -57,5 +70,5 @@ func main() {
 }
 
 func consumerHandler(message []byte) {
-	fmt.Println(string(message))
+	fmt.Println("Consumer 1:", string(message))
 }
