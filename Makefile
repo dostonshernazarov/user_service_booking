@@ -9,3 +9,7 @@ proto-gen:
 
 migrate_file:
 	migrate create -ext sql -dir migrations/ -seq users
+
+
+docker-run:
+	sudo docker run -d --name user_service -p 1111:1111 1fab

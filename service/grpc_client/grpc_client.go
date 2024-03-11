@@ -1,7 +1,7 @@
 package grpcClient
 
 import (
-	"Booking/user_service/config"
+	"user_service_booking/config"
 )
 
 // GrpcClientI ...
