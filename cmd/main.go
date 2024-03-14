@@ -8,7 +8,6 @@ import (
 	pb "user_service_booking/genproto/user_proto"
 	"user_service_booking/pkg/db"
 	"user_service_booking/pkg/logger"
-	"user_service_booking/queue/rabbitmq/consumermq"
 	"user_service_booking/service"
 )
 
@@ -41,18 +40,18 @@ func main() {
 	//	consumer.ConsumeMessages(consumerHandler)
 	//}()
 
-	// rabbit mq -------------
-	consumer, err := consumermq.NewRabbitMQConsumer("amqp://guest:guest@localhost:5672/", "test-topic")
-	if err != nil {
-		log.Error("NewRabbitMqConsumer", logger.Error(err))
-		return
-	}
-	defer consumer.Close()
-
-	go func() {
-		consumer.ConsumerMassages(consumerHandler)
-	}()
-	// rabbit mq end ------------
+	//// rabbit mq -------------
+	//consumer, err := consumermq.NewRabbitMQConsumer("amqp://guest:guest@localhost:5672/", "test-topic")
+	//if err != nil {
+	//	log.Error("NewRabbitMqConsumer", logger.Error(err))
+	//	return
+	//}
+	//defer consumer.Close()
+	//
+	//go func() {
+	//	consumer.ConsumerMassages(consumerHandler)
+	//}()
+	//// rabbit mq end ------------
 
 	lis, err := net.Listen("tcp", cfg.RPCPort)
 	if err != nil {
